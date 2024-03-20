@@ -1,6 +1,11 @@
 package br.com.ifpe.oxefood.modelo.cliente;
+
+
+//Caso a função não funcione importar ela manualmente
+import java.util.List;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +24,13 @@ public class ClienteService {
         return repository.save(cliente);
     }
 
+    public List<Cliente> listarTodos() {
+
+        return repository.findAll();
+    }
+
+    public Cliente obterPorID(Long id) {
+
+        return repository.findById(id).get();
+    }
 }
