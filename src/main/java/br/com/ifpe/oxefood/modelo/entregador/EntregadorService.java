@@ -1,9 +1,6 @@
 package br.com.ifpe.oxefood.modelo.entregador;
-
 import jakarta.transaction.Transactional;
-
 import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
