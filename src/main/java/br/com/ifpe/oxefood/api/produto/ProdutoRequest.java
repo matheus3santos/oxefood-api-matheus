@@ -1,5 +1,4 @@
 package br.com.ifpe.oxefood.api.produto;
-import java.time.LocalDate;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
