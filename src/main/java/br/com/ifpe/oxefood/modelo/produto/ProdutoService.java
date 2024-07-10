@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.ifpe.oxefood.modelo.cliente.Cliente;
 
 import java.util.List;
 
