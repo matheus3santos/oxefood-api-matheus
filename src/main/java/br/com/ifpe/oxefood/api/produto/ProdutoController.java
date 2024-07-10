@@ -1,5 +1,8 @@
 package br.com.ifpe.oxefood.api.produto;
 
+import io.swagger.v3.oas.annotations.Operation;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,10 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    @Operation(   
+        summary = "Serviço responsável por salvar um cliente no sistema.", 
+        description = "Exemplo de descrição de um endpoint responsável por inserir um cliente no sistema."
+    )
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request) {
 
