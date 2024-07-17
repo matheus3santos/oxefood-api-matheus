@@ -1,5 +1,8 @@
 package br.com.ifpe.oxefood.api.entregador;
 
+import io.swagger.v3.oas.annotations.Operation;
+
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +28,10 @@ public class EntregadorController {
    @Autowired
    private EntregadorService entregadorService;
 
+   @Operation(   
+      summary = "Serviço responsável por salvar um cliente no sistema.", 
+       description = "Exemplo de descrição de um endpoint responsável por inserir um cliente no sistema."
+   )
    @PostMapping
    public ResponseEntity<Entregador> save(@RequestBody EntregadorRequest request) {
 
