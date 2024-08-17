@@ -3,6 +3,8 @@ package br.com.ifpe.oxefood.api.cliente;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
+
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,7 @@ public class ClienteController {
     @Operation(summary = "Serviço responsável por salvar um cliente no sistema.", description = "Exemplo de descrição de um endpoint responsável por inserir um cliente no sistema.")
 
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody ClienteRequest request) {
+    public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request) {
 
         Cliente cliente = clienteService.save(request.build());
         return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
@@ -49,8 +51,8 @@ public class ClienteController {
     @Operation(summary = "Serviço responsável por buscar um cliente no sistema.", description = "Exemplo de descrição de um endpoint responsável por buscar um cliente no sistema.")
 
     @GetMapping("/{id}")
-    public Cliente obterPorId(@PathVariable Long id) {
-        return clienteService.obterPorId(id);
+    public Cliente findById(@PathVariable Long id) {
+        return clienteService.findById(id);
     }
 
     @Operation(summary = "Serviço responsável por editar um cliente no sistema.", description = "Exemplo de descrição de um endpoint responsável por editar um cliente no sistema.")

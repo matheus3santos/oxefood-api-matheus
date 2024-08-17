@@ -1,7 +1,10 @@
 package br.com.ifpe.oxefood.modelo.cliente;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import org.hibernate.annotations.SQLRestriction;
+
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +16,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
 
 
 @Entity
@@ -36,7 +38,7 @@ public class Cliente extends EntidadeAuditavel {
     @Column
     private LocalDate dataNascimento;
 
-    @Column
+    @Column(unique = true)
     private String cpf;
 
     @Column

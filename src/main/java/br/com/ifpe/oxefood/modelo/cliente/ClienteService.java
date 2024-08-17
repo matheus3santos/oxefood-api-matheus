@@ -1,19 +1,23 @@
 package br.com.ifpe.oxefood.modelo.cliente;
 
 import java.util.ArrayList;
-//Caso a função não funcione importar ela manualmente
 import java.util.List;
-import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+
 
 @Service
 public class ClienteService {
 
     @Autowired
     private ClienteRepository repository;
+
+    @Autowired
+    private EnderecoClienteRepository enderecoClienteRepository;
 
     @Transactional
     public Cliente save(Cliente cliente) {
@@ -29,7 +33,7 @@ public class ClienteService {
         return repository.findAll();
     }
 
-    public Cliente obterPorId(Long id) {
+    public Cliente findById(Long id) {
 
         return repository.findById(id).get();
     }
@@ -81,7 +85,6 @@ public class ClienteService {
 
         listaEnderecoCliente.add(endereco);
         cliente.setEnderecos(listaEnderecoCliente);
-        cliente.setVersao(cliente.getVersao() + 1);
         repository.save(cliente);
 
         return endereco;
@@ -109,9 +112,8 @@ public class ClienteService {
         endereco.setHabilitado(Boolean.FALSE);
         enderecoClienteRepository.save(endereco);
 
-        Cliente cliente = this.obterPorID(endereco.getCliente().getId());
+        Cliente cliente = this.findById(endereco.getCliente().getId());
         cliente.getEnderecos().remove(endereco);
-        cliente.setVersao(cliente.getVersao() + 1);
         repository.save(cliente);
     }
 
