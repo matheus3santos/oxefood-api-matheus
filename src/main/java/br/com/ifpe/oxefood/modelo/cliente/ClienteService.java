@@ -1,5 +1,6 @@
 package br.com.ifpe.oxefood.modelo.cliente;
 
+import java.util.ArrayList;
 //Caso a função não funcione importar ela manualmente
 import java.util.List;
 import jakarta.transaction.Transactional;
@@ -54,6 +55,63 @@ public class ClienteService {
         cliente.setHabilitado(Boolean.FALSE);
         cliente.setVersao(cliente.getVersao() + 1);
 
+        repository.save(cliente);
+    }
+
+    // Relacioanamento com EnderecoCliente
+
+    @Transactional
+    public EnderecoCliente adicionarEnderecoCliente(Long clienteId, EnderecoCliente endereco) {
+
+        Cliente cliente = this.findById(clienteId);
+
+        // Primeiro salva o EnderecoCliente:
+
+        endereco.setCliente(cliente);
+        endereco.setHabilitado(Boolean.TRUE);
+        enderecoClienteRepository.save(endereco);
+
+        // Depois acrescenta o endereço criado ao cliente e atualiza o cliente:
+
+        List<EnderecoCliente> listaEnderecoCliente = cliente.getEnderecos();
+
+        if (listaEnderecoCliente == null) {
+            listaEnderecoCliente = new ArrayList<EnderecoCliente>();
+        }
+
+        listaEnderecoCliente.add(endereco);
+        cliente.setEnderecos(listaEnderecoCliente);
+        cliente.setVersao(cliente.getVersao() + 1);
+        repository.save(cliente);
+
+        return endereco;
+    }
+
+    @Transactional
+    public EnderecoCliente atualizarEnderecoCliente(Long id, EnderecoCliente enderecoAlterado) {
+
+        EnderecoCliente endereco = enderecoClienteRepository.findById(id).get();
+        endereco.setRua(enderecoAlterado.getRua());
+        endereco.setNumero(enderecoAlterado.getNumero());
+        endereco.setBairro(enderecoAlterado.getBairro());
+        endereco.setCep(enderecoAlterado.getCep());
+        endereco.setCidade(enderecoAlterado.getCidade());
+        endereco.setEstado(enderecoAlterado.getEstado());
+        endereco.setComplemento(enderecoAlterado.getComplemento());
+
+        return enderecoClienteRepository.save(endereco);
+    }
+
+    @Transactional
+    public void removerEnderecoCliente(Long id) {
+
+        EnderecoCliente endereco = enderecoClienteRepository.findById(id).get();
+        endereco.setHabilitado(Boolean.FALSE);
+        enderecoClienteRepository.save(endereco);
+
+        Cliente cliente = this.obterPorID(endereco.getCliente().getId());
+        cliente.getEnderecos().remove(endereco);
+        cliente.setVersao(cliente.getVersao() + 1);
         repository.save(cliente);
     }
 
