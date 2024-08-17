@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
 import java.util.List;
 
 import br.com.ifpe.oxefood.modelo.categoriaproduto.CategoriaProdutoService;
@@ -31,14 +33,18 @@ public class ProdutoController {
     @Autowired
     private CategoriaProdutoService categoriaProdutoService;
 
-    @Operation(summary = "Serviço responsável por salvar um cliente no sistema.", description = "Exemplo de descrição de um endpoint responsável por inserir um cliente no sistema.")
+    @Operation(
+        summary = "Serviço responsável por salvar um cliente no sistema.", 
+        description = "Exemplo de descrição de um endpoint responsável por inserir um cliente no sistema."
+        )
+        
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request) {
         
         
         Produto produtoNovo = request.build();
         produtoNovo.setCategoria(categoriaProdutoService.obterPorID(request.getIdCategoria()));
-        Produto produto = produtoService.save(request.build());
+        Produto produto = produtoService.save(produtoNovo);
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
     }
 

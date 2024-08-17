@@ -1,12 +1,12 @@
 package br.com.ifpe.oxefood.modelo.categoriaproduto;
 
+import java.util.List;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class CategoriaProdutoService {
@@ -37,10 +37,10 @@ public class CategoriaProdutoService {
     @Transactional
     public void update(Long id, CategoriaProduto categoriaProdutoAlterado) {
 
-        CategoriaProduto categoriaProdutoAlterado = repository.findById(id).get();
-        categoriaProdutoAlterado.setCodigo(categoriaProdutoAlterado.getCodigo());
+        CategoriaProduto categoriaProduto = repository.findById(id).get();
+        
+        categoriaProduto.setDescricao(categoriaProdutoAlterado.getDescricao());
      
-
         categoriaProduto.setVersao(categoriaProduto.getVersao() + 1);
         repository.save(categoriaProduto);
     }
