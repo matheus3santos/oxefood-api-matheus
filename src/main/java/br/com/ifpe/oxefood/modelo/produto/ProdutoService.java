@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 
 @Service
@@ -33,6 +32,32 @@ public class ProdutoService {
 
         return repository.findById(id).get();
     }
+    
+    // Método para buscar os produtos
+    public List<Produto> filtrar(String codigo, String titulo, Long idCategoria) {
+
+        List<Produto> listaProdutos = repository.findAll();
+
+        if ((codigo != null && !"".equals(codigo)) &&
+                (titulo == null || "".equals(titulo)) &&
+                (idCategoria == null)) {
+            listaProdutos = repository.consultarPorCodigo(codigo);
+        } else if ((codigo == null || "".equals(codigo)) &&
+                (titulo != null && !"".equals(titulo)) &&
+                (idCategoria == null)) {
+            listaProdutos = repository.findByTituloContainingIgnoreCaseOrderByTituloAsc(titulo);
+        } else if ((codigo == null || "".equals(codigo)) &&
+                (titulo == null || "".equals(titulo)) &&
+                (idCategoria != null)) {
+            listaProdutos = repository.consultarPorCategoria(idCategoria);
+        } else if ((codigo == null || "".equals(codigo)) &&
+                (titulo != null && !"".equals(titulo)) &&
+                (idCategoria != null)) {
+            listaProdutos = repository.consultarPorTituloECategoria(titulo, idCategoria);
+        }
+
+        return listaProdutos;
+    }
 
     // Método para atualizar um entregador(Alterar os dados antes de finalizar)
     @Transactional
@@ -53,13 +78,12 @@ public class ProdutoService {
 
     @Transactional
     public void delete(Long id) {
- 
+
         Produto produto = repository.findById(id).get();
         produto.setHabilitado(Boolean.FALSE);
         produto.setVersao(produto.getVersao() + 1);
- 
+
         repository.save(produto);
     }
- 
 
 }
