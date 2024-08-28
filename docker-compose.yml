@@ -12,3 +12,6 @@ services:
      volumes:
        - ./postgres-data:/bitnami/postgresql/data
 #  Trocar apontamento do banco de dados quando for usar na faculdade ports: -5437:5432
+
+#5435 - PORTA DA API
+#5432 - PORTA DO BANCO
